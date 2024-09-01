@@ -1,8 +1,6 @@
 package com.manage.employee.Services;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
@@ -12,8 +10,8 @@ import java.net.URL;
 
 @Service
 public class WeatherInfoService {
-    //    @Value("${app.open.weather.key}")
-    private static String API_KEY="970127ea13f8e69d88c4350d34372128";
+    @Value("${app.open.weather.key}")
+    private static String API_KEY;
     private static final String API_URL = "https://api.openweathermap.org/data/2.5/weather?lat=%s&lon=%s&exclude=minutely,hourly,daily,alerts&appid=" + API_KEY;
 
     public static void getWeatherInfo(String lat,String lon) {

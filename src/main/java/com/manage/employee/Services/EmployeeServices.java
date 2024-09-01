@@ -15,7 +15,8 @@ public class EmployeeServices {
     private ZeroEmailVerificationService emailVerificationService;
 
     @Autowired
-    public EmployeeServices(EmployeeRepository employeeRepository) {
+    public EmployeeServices(EmployeeRepository employeeRepository,ZeroEmailVerificationService emailVerificationService) {
+        this.emailVerificationService = emailVerificationService;
         this.employeeRepository = employeeRepository;
     }
 
