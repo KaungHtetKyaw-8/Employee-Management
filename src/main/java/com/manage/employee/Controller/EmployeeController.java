@@ -4,6 +4,7 @@ package com.manage.employee.Controller;
 import com.manage.employee.Entity.Employee;
 import com.manage.employee.Services.EmployeeServices;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "api/v1/employee")
+@Profile("Employee")
 public class EmployeeController {
 
     private EmployeeServices employeeServices;

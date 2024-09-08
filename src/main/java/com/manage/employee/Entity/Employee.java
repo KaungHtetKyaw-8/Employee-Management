@@ -1,12 +1,14 @@
 package com.manage.employee.Entity;
 
 import jakarta.persistence.*;
+import org.springframework.context.annotation.Profile;
 
 import java.time.LocalDate;
 import java.time.Period;
 
 @Entity
 @Table(name = "employee")
+@Profile("Employee")
 public class Employee {
 
     @Id

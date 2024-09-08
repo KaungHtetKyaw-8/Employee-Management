@@ -2,12 +2,14 @@ package com.manage.employee.Controller;
 
 import com.manage.employee.Services.GoogleOauth2Services;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 
 @RestController
 @RequestMapping(path = "api/v1/google/auth")
+@Profile("Google")
 public class GoogleController {
     GoogleOauth2Services googleEmailVerification;
 

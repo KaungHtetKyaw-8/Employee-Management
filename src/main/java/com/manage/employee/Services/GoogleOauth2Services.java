@@ -9,6 +9,7 @@ import com.google.api.client.json.gson.GsonFactory;
 import com.google.api.client.util.store.FileDataStoreFactory;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.services.gmail.GmailScopes;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
@@ -19,7 +20,7 @@ import java.nio.file.Path;
 import java.util.Collection;
 import java.util.Collections;
 
-@Service
+@Service @Profile("Google")
 public class GoogleOauth2Services {
     private final String APPLICATION_NAME = "MyTestingApp";
     private final JsonFactory GSON_FACTORY = GsonFactory.getDefaultInstance();

@@ -1,6 +1,10 @@
 package com.manage.employee.Services;
 
+import com.google.gson.JsonParser;
+import com.manage.employee.Entity.Weather;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
@@ -8,15 +12,28 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-@Service
+@Service @Profile("Weather")
 public class WeatherInfoService {
     @Value("${app.open.weather.key}")
-    private static String API_KEY;
-    private static final String API_URL = "https://api.openweathermap.org/data/2.5/weather?lat=%s&lon=%s&exclude=minutely,hourly,daily,alerts&appid=" + API_KEY;
+    private String API_KEY;
 
-    public static void getWeatherInfo(String lat,String lon) {
+    private final String API_URL1 = "https://api.openweathermap.org/data/2.5/weather?lat=%f&lon=%f&exclude=minutely,hourly,daily,alerts&appid=%s&units=metric";
+    private final String API_URL2 = "https://api.openweathermap.org/data/2.5/weather?q=%s&exclude=minutely,hourly,daily,alerts&appid=%s&units=metric";
+
+    @Autowired
+    private JsonParser jsonParser;
+
+    public Weather getWeatherInfo(double lat, double lon) {
+        return buildWeatherInfo(String.format(API_URL1,lat,lon,API_KEY));
+    }
+
+    public Weather getWeatherInfo(String city)  {
+        return buildWeatherInfo(String.format(API_URL2,city,API_KEY));
+    }
+
+    private Weather buildWeatherInfo(String URL){
         try {
-            URL url = new URL(String.format(API_URL,lat,lon));
+            URL url = new URL(String.format(URL));
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
 
@@ -29,28 +46,14 @@ public class WeatherInfoService {
             }
             in.close();
 
-            System.out.println("Response: " + response.toString());
+            return new Weather()
+                    .setWeatherInfo(jsonParser
+                            .parse(response.toString())
+                            .getAsJsonObject());
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return null;
     }
-
-//    public static void main(String[] args) {
-////        getWeatherInfo("16.828885","96.269391");
-//        String response = "{\"coord\":{\"lon\":96.2694,\"lat\":16.8289},\"weather\":[{\"id\":803,\"main\":\"Clouds\",\"description\":\"broken clouds\",\"icon\":\"04d\"}],\"base\":\"stations\",\"main\":{\"temp\":306.27,\"feels_like\":313.27,\"temp_min\":306.27,\"temp_max\":306.27,\"pressure\":1005,\"humidity\":79,\"sea_level\":1005,\"grnd_level\":1004},\"visibility\":7000,\"wind\":{\"speed\":1.54,\"deg\":310},\"clouds\":{\"all\":75},\"dt\":1723361097,\"sys\":{\"type\":1,\"id\":9322,\"country\":\"MM\",\"sunrise\":1723331862,\"sunset\":1723377761},\"timezone\":23400,\"id\":1295395,\"name\":\"Syriam\",\"cod\":200}";
-//
-//        JsonParser parser = new JsonParser();
-//        JsonObject jsonObject = parser.parse(response).getAsJsonObject();
-//
-//        JsonObject jsonWeather = jsonObject.get("weather").getAsJsonArray().get(0).getAsJsonObject();
-//
-//        Double Temperature = jsonObject.get("main").getAsJsonObject().get("temp").getAsDouble();
-//
-//        System.out.println("Weather : " +jsonWeather
-//                .get("main")
-//                .getAsString()
-//        );
-//        System.out.println("Temperature : " + (int)(Temperature - 273.15) +" C");
-//    }
 
 }

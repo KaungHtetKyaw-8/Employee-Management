@@ -3,12 +3,13 @@ package com.manage.employee.Services;
 import com.manage.employee.Entity.Employee;
 import com.manage.employee.Repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
-@Service
+@Service @Profile("Employee")
 public class EmployeeServices {
 
     private EmployeeRepository employeeRepository;
