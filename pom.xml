@@ -62,7 +62,7 @@
 			<scope>test</scope>
 		</dependency>
 
-		<!--Google Api Verify fail-->
+		<!--Google Api Verify -->
 		<dependency>
 			<groupId>com.google.api-client</groupId>
 			<artifactId>google-api-client</artifactId>
@@ -76,7 +76,7 @@
 		<dependency>
 			<groupId>com.google.apis</groupId>
 			<artifactId>google-api-services-gmail</artifactId>
-			<version>v1-rev20240520-2.0.0</version> <!-- Use the latest version -->
+			<version>v1-rev20240520-2.0.0</version>
 		</dependency>
 		<dependency>
 			<groupId>com.google.apis</groupId>
@@ -86,7 +86,7 @@
 		<dependency>
 			<groupId>com.google.code.gson</groupId>
 			<artifactId>gson</artifactId>
-			<version>2.10.1</version> <!-- Use the latest version -->
+			<version>2.10.1</version>
 		</dependency>
 
 		<!--Json <-> OBJ-->
